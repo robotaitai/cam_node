@@ -1,0 +1,35 @@
+{
+  "name": "ROS1 Camera Node Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "editor.formatOnSave": true
+  },
+  "extensions": [
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-vscode.cpptools",
+    "ms-ros.ros"
+  ],
+  "postCreateCommand": "source /opt/ros/noetic/setup.bash && catkin_make",
+  "remoteUser": "vscode",  // Ensure this matches the user in the Dockerfile
+  "mounts": [
+    "source=/dev/,target=/dev/,type=bind"
+  ],
+  "runArgs": [
+    "--privileged",
+    "--network",
+    "host",
+    "--device=/dev/video0:/dev/video0"
+  ],
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "forwardPorts": [],
+  "remoteEnv": {
+    "ROS_MASTER_URI": "http://localhost:11311",
+    "ROS_IP": "127.0.0.1"
+  }
+}
